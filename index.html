@@ -35,6 +35,19 @@
     .band-inner {
       max-width: var(--max);
       margin: 0 auto;
+      position: relative;
+    }
+    .site-icon-link {
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-bottom: 0;
+      line-height: 0;
+    }
+    .site-icon {
+      display: block;
+      width: 52px;
+      height: auto;
     }
     .title-line {
       text-align: justify;
@@ -248,6 +261,10 @@
 		.slogan {
 		font-size: 13px;
 		}
+
+    .site-icon {
+    width: 40px;
+    }
 	}
 
 		
@@ -260,6 +277,9 @@
 <body>
   <header class="band">
     <div class="band-inner">
+      <a class="site-icon-link" href="http://recursivehuman.com" aria-label="Recursive Human home">
+        <img class="site-icon" src="images/Infinity logo - ChatGPT Image Apr 25, 2026, 02_09_16 PM.png" alt="Recursive Human infinity logo" />
+      </a>
       <p class="title-line title">
         <span class="title-word">R E C U R S I V E</span>
         <span class="title-word">H U M A N</span>
