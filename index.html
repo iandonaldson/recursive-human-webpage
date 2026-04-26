@@ -421,6 +421,7 @@
 
   // Normal load
   document.addEventListener("DOMContentLoaded", setRandomWordWithFade);
+  setInterval(setRandomWordWithFade, 5000);
 
   // bfcache restore (Safari/Chrome/Firefox)
   window.addEventListener("pageshow", (e) => {
