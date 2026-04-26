@@ -115,6 +115,31 @@
       border-top: 1px solid var(--rule);
       margin: 30px 0;
     }
+    .section-nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: -10px 0 28px;
+    }
+    .section-nav a {
+      border: 1px solid #111111;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #111111;
+      background: transparent;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .section-nav a:hover,
+    .section-nav a:focus-visible {
+      background: #111111;
+      color: #ffffff;
+      outline: none;
+    }
     .list {
       margin: 0 0 16px 0;
       padding: 0;
@@ -254,7 +279,13 @@
 <p>Recursive Human works with small to medium biotech and research organisations to clarify data, strategy, and scientific direction.</p>
 <hr class="divider" />
 
-<details class="section">
+<nav class="section-nav" aria-label="Primary">
+  <a href="#about">About</a>
+  <a href="https://blog.recursivehuman.com" target="_blank" rel="noopener noreferrer">Blog</a>
+  <a href="mailto:ian.donaldson@recursivehuman.com">Contact</a>
+</nav>
+
+<details class="section" id="about">
   <summary class="section-toggle">What We Do</summary>
   <div class="section-body">
   
