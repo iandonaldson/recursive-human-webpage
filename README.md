@@ -9,4 +9,5 @@ This repository contains the source for the Recursive Human website.
 
 This site is connected to Netlify.
 
-Commits pushed to this repository are automatically built and reflected on the corresponding Netlify website.
+Commits pushed to this repository are automatically built and reflected on the corresponding Netlify website.  The
+BLOG links to the beehiiv hosted sited pages.
