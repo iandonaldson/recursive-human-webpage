@@ -196,6 +196,36 @@
     }
     
     
+    /* Navigation bar */
+    .navbar {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+    }
+    .navbar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+    .navbar-inner a {
+      display: inline-block;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      border-bottom: none;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .navbar-inner a:hover {
+      color: var(--muted);
+    }
+
     /* iPhone SE (320px) optimisation */
 	@media (max-width: 380px) {
 	
@@ -248,13 +278,25 @@
     </div>
   </header>
 
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="#what-we-do">What We Do</a>
+      <a href="#how-we-work">How We Work</a>
+      <a href="#who-we-are">Who We Are</a>
+      <a href="#get-in-touch">Get in Touch</a>
+      <a href="#work-with-us">Work With Us</a>
+      <a href="#about-our-name">About Our Name</a>
+      <a href="https://blog.recursivehuman.com" target="_blank" rel="noopener noreferrer">Blog</a>
+    </div>
+  </nav>
+
   <main class="container">
     
 <h3>Bioinformatics, Data Science, Data Strategy and AI.</h3>
 <p>Recursive Human works with small to medium biotech and research organisations to clarify data, strategy, and scientific direction.</p>
 <hr class="divider" />
 
-<details class="section">
+<details class="section" id="what-we-do">
   <summary class="section-toggle">What We Do</summary>
   <div class="section-body">
   
@@ -280,7 +322,7 @@
 </details>
 
 
-<details class="section">
+<details class="section" id="how-we-work">
   <summary class="section-toggle">How We Work</summary>
   <div class="section-body">
 <p>Recursive Human engages through:</p>
@@ -296,7 +338,7 @@
 </details>
 
 
-<details class="section">
+<details class="section" id="who-we-are">
   <summary class="section-toggle">Who We Are</summary>
   <div class="section-body">
 <p>Recursive Human was founded in 2025 by <a href="https://www.linkedin.com/in/donaldsonian" target="_blank" rel="noopener noreferrer">Ian Donaldson</a>.</p>
@@ -308,7 +350,7 @@
 </details>
 
 
-<details class="section">
+<details class="section" id="get-in-touch">
   <summary class="section-toggle">Get in Touch</summary>
   <div class="section-body">
 <p>Email<br>ian.donaldson@recursivehuman.com</p>
@@ -324,7 +366,7 @@
 </details>
 
 
-<details class="section">
+<details class="section" id="work-with-us">
   <summary class="section-toggle">Work With Us</summary>
   <div class="section-body">
 <p>Recursive Human collaborates with independent consultants, data scientists, bioinformaticians, data engineers, developers and small specialist groups.</p>
@@ -335,7 +377,7 @@
 </details>
 
 
-<details class="section">
+<details class="section" id="about-our-name">
   <summary class="section-toggle">About our name</summary>
   <div class="section-body">
 <p>The Recursive Human refers to the human's ability to think about thinking*.<br></p>
