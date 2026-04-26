@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recursive Human</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --rule: rgba(0,0,0,0.10);
+      --max: 900px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Title/slogan band unchanged */
+    .band {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      padding: 44px 20px 34px;
+      border-bottom: 1px solid var(--rule);
+      background: var(--bg);
+    }
+    .band-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .title-line {
+      text-align: justify;
+      text-align-last: justify;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .title-line::after {
+      content: "";
+      display: inline-block;
+      width: 100%;
+    }
+    .title {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    .title-word + .title-word {
+      margin-left: 0.6em;   /* creates spacing on desktop */
+    }
+    .slogan {
+      font-size: 18px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+    
+    
+    #dynamic-word {
+      opacity: 0;
+      transition: opacity 2.5s ease;  /* pick your speed */
+    }
+    
+    
+    /*
+    #dynamic-word {
+      transition: opacity 5.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    */
+
+    /* Main section matches index_1.html feel */
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 60px 20px 80px;
+    }
+    h2 {
+      margin-top: 60px;
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 24px;
+    }
+    h3 {
+      margin-top: 28px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    h4 {
+      margin-top: 18px;
+      margin-bottom: 8px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    p {
+      margin: 0 0 14px 0;
+      font-size: 16px;
+    }
+    a {
+      color: #000000;
+      text-decoration: none;
+      border-bottom: 1px solid #000000;
+    }
+    .divider {
+      border: 0;
+      border-top: 1px solid var(--rule);
+      margin: 30px 0;
+    }
+    .list {
+      margin: 0 0 16px 0;
+      padding: 0;
+      list-style: none;
+    }
+    .list li {
+      margin: 6px 0;
+      padding-left: 0;
+    }
+    .checkbox {
+      display: inline-block;
+      width: 1.2em;
+      color: var(--muted);
+    }
+    .systems-list {
+      list-style: none;          /* remove default bullets */
+      margin: 6px 0 14px 28px;   /* indent block */
+      padding: 0;
+    }
+
+    .systems-list li {
+      margin: 1px 0;             /* tighter vertical spacing */
+      line-height: 1.35;         /* reduce line spacing */
+      position: relative;
+      padding-left: 18px;        /* space for square */
+    }
+
+    .systems-list li::before {
+      content: "■";              /* square */
+      font-size: 10px;
+      color: var(--muted);
+      position: absolute;
+      left: 0;
+      top: 4px;
+    }
+
+  
+    /* Collapsible sections (details/summary) */
+    details.section {
+      margin-top: 16px; /* similar to h2 top margin */
+    }
+
+    details.section > summary.section-toggle {
+      cursor: pointer;
+      font-size: 24px;      /* match h2 size */
+      font-weight: 700;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      margin: 0 0 12px 0;   /* match h2 bottom spacing */
+    }
+
+    /* Remove default browser marker */
+    details.section > summary.section-toggle::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Custom triangle */
+    details.section > summary.section-toggle::before {
+      content: "▸";
+      margin-right: 10px;
+      font-size: 16px;
+      line-height: 1;
+      color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    details.section[open] > summary.section-toggle::before {
+      content: "▾";
+    }
+
+    /* Keep content aligned with title, not with marker */
+    details.section > .section-body {
+      margin-left: 26px; /* aligns body after the triangle */
+    }
+
+    details.section > .section-body > :first-child {
+      margin-top: 0;
+    }
+    
+    
+    /* iPhone SE (320px) optimisation */
+	@media (max-width: 380px) {
+	
+		.title-line {
+		white-space: normal;
+		overflow: visible;
+		text-align: center;
+		text-align-last: center;
+		letter-spacing: 0.06em;
+		}
+		
+		.title-line::after {
+		display: none;
+		}
+		
+		.title-word {
+		display: block;       /* forces line break between words */
+		}
+		
+		.title-word + .title-word {
+          margin-left: 0;     /* remove desktop spacing */
+        }
+
+		.title {
+		font-size: 26px;
+		}
+		
+		.slogan {
+		font-size: 13px;
+		}
+	}
+
+		
+    
+
+</style>
+</head>
+
+
+<body>
+  <header class="band">
+    <div class="band-inner">
+      <p class="title-line title">
+        <span class="title-word">R E C U R S I V E</span>
+        <span class="title-word">H U M A N</span>
+      </p>
+      <p class="title-line slogan">
+		T H I N K <span id="dynamic-word">D I F F E R E N T L Y</span>
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    
+<h3>Bioinformatics, Data Science, Data Strategy and AI.</h3>
+<p>Recursive Human works with small to medium biotech and research organisations to clarify data, strategy, and scientific direction.</p>
+<hr class="divider" />
+
+<details class="section">
+  <summary class="section-toggle">What We Do</summary>
+  <div class="section-body">
+  
+  <p>We operate at the intersection of:</p>
+    <ul class="systems-list">
+      <li>Biological systems</li>
+      <li>Research systems</li>
+      <li>Computational systems and</li>
+      <li>Human systems</li>
+    </ul>
+  <p>Clarity in one layer enables capability in all the others.</p>
+  
+<h4>Bioinformatics</h4>
+<p>We design and implement robust analytical workflows across bulk and single-cell genomics, translational datasets, and multi-omic systems.<br>From exploratory analysis to reproducible pipelines, we help you extract signal from biological complexity.</p>
+<h4>Data Science</h4>
+<p>Data integration, statistical modelling, machine learning, and scalable computation tailored to research environments.<br>We turn fragmented datasets into structured knowledge.</p>
+<h4>Data Strategy</h4>
+<p>Architecture, governance, FAIR data design, and sustainable infrastructure for growing research organisations.<br>We help teams move from ad hoc analyses to durable capability.</p>
+<h4>AI-Enabled Horizon Scanning & Competitive Intelligence</h4>
+<p>We design AI-assisted research intelligence systems that surface emerging science, competitors, technologies, and strategic inflection points — while keeping your team in the loop.</p>
+<hr class="divider" />
+  </div>
+</details>
+
+
+<details class="section">
+  <summary class="section-toggle">How We Work</summary>
+  <div class="section-body">
+<p>Recursive Human engages through:</p>
+<ul class="list">
+<li><span class='checkbox' aria-hidden='true'>☐</span> Focused consulting projects</li>
+<li><span class='checkbox' aria-hidden='true'>☐</span> Embedded fractional leadership</li>
+<li><span class='checkbox' aria-hidden='true'>☐</span> Bespoke analytical builds</li>
+<li><span class='checkbox' aria-hidden='true'>☐</span> Strategic advisory engagements</li>
+</ul>
+<p>Every engagement is designed to compound capability - you get code, data, and future-proofed process - not just a report.</p>
+<hr class="divider" />
+  </div>
+</details>
+
+
+<details class="section">
+  <summary class="section-toggle">Who We Are</summary>
+  <div class="section-body">
+<p>Recursive Human was founded in 2025 by <a href="https://www.linkedin.com/in/donaldsonian" target="_blank" rel="noopener noreferrer">Ian Donaldson</a>.</p>
+<p>Ian is a bioinformatician and data strategist with director-level experience in translational biotech environments. He has led cross-functional initiatives that transformed fragmented datasets into collaborative, FAIR, and strategically useful assets.</p>
+<p>Recursive Human exists to help organisations evolve their relationship with data. And through that, their relationship with each other.</p>
+<p>Recursive Human also collaborates with data-centric sole traders, independent consultants, and small specialist groups.  See below.</p>
+<hr class="divider" />
+  </div>
+</details>
+
+
+<details class="section">
+  <summary class="section-toggle">Get in Touch</summary>
+  <div class="section-body">
+<p>Email<br>ian.donaldson@recursivehuman.com</p>
+<p>
+<!-- Calendly link widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/ian-donaldson-recursivehuman/30min'});return false;">Schedule time with me</a>
+<!-- Calendly link widget end -->
+<br></p>
+<hr class="divider" />
+  </div>
+</details>
+
+
+<details class="section">
+  <summary class="section-toggle">Work With Us</summary>
+  <div class="section-body">
+<p>Recursive Human collaborates with independent consultants, data scientists, bioinformaticians, data engineers, developers and small specialist groups.</p>
+<p>If you operate as a sole trader or through your own Limited company and are interested in collaborating, please get in touch:</p>
+<p>collaborators@recursivehuman.com</p>
+<hr class="divider" />
+  </div>
+</details>
+
+
+<details class="section">
+  <summary class="section-toggle">About our name</summary>
+  <div class="section-body">
+<p>The Recursive Human refers to the human's ability to think about thinking*.<br></p>
+<p>Awareness of how we and others think is the starting point for all projects at Recursive Human Ltd.</p>
+<p>
+    <small>
+        <p>*<a href="https://en.wikipedia.org/wiki/Recursion" target="_blank" rel="noopener noreferrer">Recursion</a> refers to a process that makes calls to itself and is an important concept at the base of many complex phenomena including language, human governance, agentic ai and biological systems.</p>
+    </small>
+</p>
+</details>
+
+<hr class="divider" />
+<p>London · UK / EU / CANADA / USA</p>
+<p>© 2026 Recursive Human Ltd</p>
+</div>
+
+<!-- Calendly badge widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: 'https://calendly.com/ian-donaldson-recursivehuman/30min', text: 'Schedule time with me', color: '#0069ff', textColor: '#ffffff', branding: true }); }</script>
+<!-- Calendly badge widget end -->
+  
+</main>
+
+<script>
+  const words = [
+    "DIFFERENTLY","SLOWER","CRITICALLY","GRAPHICALLY","STRATEGICALLY",
+    "CREATIVELY","LATERALLY","ANALYTICALLY","SYSTEMATICALLY","RECURSIVELY",
+    "ABSTRACTLY","SUSTAINABLY","ROBUSTLY"
+  ];
+
+  function spaceLetters(word) {
+    return word.split("").join(" ");
+  }
+
+  function setRandomWordWithFade() {
+    const el = document.getElementById("dynamic-word");
+    if (!el) return;
+
+    const randomWord = words[Math.floor(Math.random() * words.length)];
+
+    // Reset animation reliably
+    el.style.transition = "none";
+    el.style.opacity = "0";
+    el.textContent = spaceLetters(randomWord);
+
+    // Force reflow so the browser commits opacity=0
+    void el.offsetHeight;
+
+    // Re-enable transition and fade in
+    el.style.transition = "";
+    requestAnimationFrame(() => {
+      el.style.opacity = "1";
+    });
+  }
+
+  // Normal load
+  document.addEventListener("DOMContentLoaded", setRandomWordWithFade);
+
+  // bfcache restore (Safari/Chrome/Firefox)
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) setRandomWordWithFade();
+  });
+</script>
+
+
+
+
+</body>
+</html>
